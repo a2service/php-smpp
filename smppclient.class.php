@@ -1062,11 +1062,11 @@ class SmppDeliveryReceipt extends SmppSms
 	 */
 	public function parseDeliveryReceipt()
 	{
-		$numMatches = preg_match('/^id:([^ ]+) sub:(\d+) dlvrd:(\d+) submit date:(\d+) done date:(\d+) stat:([A-Z ]{7}) err:(\d+) text:(.*)$/si', $this->message, $matches);
+		$numMatches = preg_match('/^id:([^ ]+) sub:(\d+) dlvrd:(\d+) submit date:(\d+) done date:(\d+) stat:([A-Z ]{7}) err:(\d+)/si', $this->message, $matches);
 		if ($numMatches == 0) {
 			throw new InvalidArgumentException('Could not parse delivery receipt: '.$this->message."\n".bin2hex($this->body));	
 		}
-		list($matched, $this->id, $this->sub, $this->dlvrd, $this->submitDate, $this->doneDate, $this->stat, $this->err, $this->text) = $matches;
+		list($matched, $this->id, $this->sub, $this->dlvrd, $this->submitDate, $this->doneDate, $this->stat, $this->err) = $matches;
 		
 		// Convert dates
 		$dp = str_split($this->submitDate,2);
